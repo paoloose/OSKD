@@ -1,5 +1,4 @@
-use axum::{body::Body, routing::get, Server};
-use http::Response;
+use axum::{response::Html, routing::get, Server};
 use rdev::{listen, Event};
 use socketio_server::{
     config::SocketIoConfig, layer::SocketIoLayer, ns::Namespace, socket::Socket,
@@ -50,7 +49,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             "/",
             get(move || async {
                 let html = include_str!("../public/index.html");
-                Response::new(Body::from(html))
+                Html(html)
             }),
         )
         .route(
